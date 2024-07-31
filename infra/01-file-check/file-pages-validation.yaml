@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  LambdaExecutionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+
+  MyLambdaFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-lambda
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ImageUri: !Sub ${ECRRepositoryUri}:latest
+      PackageType: Image
+      Timeout: 900  # 15 minutes
+      MemorySize: 10240  # Maximum memory size (10 GB)
+
+Parameters:
+  ECRRepositoryUri:
+    Type: String
+    Description: 'ECR Repository URI'
