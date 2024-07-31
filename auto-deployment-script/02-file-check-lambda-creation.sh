@@ -6,7 +6,7 @@ IMAGE_NAME="file-pages-validation"
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 REGION="us-east-1"
 ECR_REPOSITORY_NAME="file-pages-validation"
-DOCKER_CONTEXT_PATH="infra/01-file-check"
+DOCKER_CONTEXT_PATH="../infra/01-file-check"
 
 # Create ECR repository if it doesn't exist
 aws ecr describe-repositories --repository-names $ECR_REPOSITORY_NAME > /dev/null 2>&1
