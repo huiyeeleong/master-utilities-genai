@@ -14,18 +14,26 @@ Resources:
         - arn:aws:iam::aws:policy/AdministratorAccess
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole  # CloudWatch Logs permission
 
-  FileValidationFunction:
+  FileTypeCheckFunction:
     Type: 'AWS::Lambda::Function'
     Properties:
       FunctionName: !Sub ${AWS::StackName}-lambda
+      Handler: lambda_function.lambda_handler
       Role: !GetAtt LambdaExecutionRole.Arn
       Code:
-        ImageUri: !Sub ${ECRRepositoryUri}:latest
-      PackageType: Image
+        ZipFile: |
+          import json
+
+          def lambda_handler(event, context):
+              # Extract the object key from the event
+              object_key = event['key']
+              
+              # Check if the file is a PDF by looking at the extension
+              is_pdf = object_key.lower().endswith('.pdf')
+
+              # Return the result along with the original input for continuity
+              event['isPdf'] = is_pdf
+              return event
+      Runtime: python3.8
       Timeout: 900  # 15 minutes
       MemorySize: 10240  # Maximum memory size (10 GB)
-
-Parameters:
-  ECRRepositoryUri:
-    Type: String
-    Description: 'ECR Repository URI'
