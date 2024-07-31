@@ -13,7 +13,7 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AdministratorAccess
 
-  MyLambdaFunction:
+  FileValidationFunction:
     Type: 'AWS::Lambda::Function'
     Properties:
       FunctionName: !Sub ${AWS::StackName}-lambda
