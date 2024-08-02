@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Variables (customize these as needed)
-STACK_NAME="ai-integration-analysis-stack"
-TEMPLATE_FILE="../infra/02-usecase-1-2/bedrock-integration-analysis.yaml"
+STACK_NAME="s3-to-dynamodb-stack"
+TEMPLATE_FILE="../infra/02-usecase-1-2/push-dynamodb.yaml"
 
 # Check if the CloudFormation template file exists
 if [ ! -f "$TEMPLATE_FILE" ]; then
