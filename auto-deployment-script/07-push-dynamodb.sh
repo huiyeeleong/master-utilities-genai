@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables (customize these as needed)
-STACK_NAME="s3-to-dynamodb-stack"
+STACK_NAME="push-dynamodb-stack"
 TEMPLATE_FILE="../infra/02-usecase-1-2/push-dynamodb.yaml"
 
 # Check if the CloudFormation template file exists
